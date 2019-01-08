@@ -31,10 +31,12 @@ namespace ConsoleApp10
                             throw new InvalidOperationException();
                             return 5;
                         })
+                        .WithExceptionHandlerSequenceBehaviour(ExceptionHandlerSequenceBehaviour.AutoOrder)
                         //.Swallow()
                         //.CatchAsync<Exception>(async (ex, context) => { Console.WriteLine("Caught " + nameof(Exception)); await Task.Delay(1); return 2; })
                         //.Catch<Exception>(async ex => { await Task.Delay(2000); Console.WriteLine("Caught " + nameof(Exception)); await Task.Delay(1); })
                         .Catch<Exception>(ex => { Console.WriteLine("Caught " + nameof(Exception)); throw ex; })
+                        .Catch<InvalidOperationException>(ex => { Console.WriteLine("Caught " + nameof(InvalidOperationException)); throw ex; })
                         .Finally((context) => Console.WriteLine("Finally"))
                         .ExecuteAsync();
                         //.GetValueOrThrow();
@@ -57,12 +59,12 @@ namespace ConsoleApp10
 
                 //Console.WriteLine(result2);
             }
+            
             catch(Exception e)
             {
                 Console.WriteLine("Rethrown unhandled exception: " + e.ToString());
             }
 
-            
             Console.ReadKey();
         }
     }

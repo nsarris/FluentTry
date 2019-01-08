@@ -9,9 +9,26 @@ namespace FluentTry
 
     #region ITryOperation / ITryAsyncOperation
 
+    public static class IConfigurableTryOperationExtensions
+    {
+        public static T WithExceptionHandlerSequenceBehaviour<T>(this T operation, ExceptionHandlerSequenceBehaviour exceptionHandlerSequenceBehaviour)
+            where T : IConfigurableTryOperation
+        {
+            if (operation is IConfigurableTryOperationInternal operationInternal)
+                operationInternal.ExceptionHandlerSequenceBehaviour = exceptionHandlerSequenceBehaviour;
+
+            return operation;
+        }
+    }
+
     public interface IConfigurableTryOperation
     {
 
+    }
+
+    internal interface IConfigurableTryOperationInternal
+    {
+        ExceptionHandlerSequenceBehaviour ExceptionHandlerSequenceBehaviour { get; set; }
     }
 
     public interface IExecutableOperation
@@ -32,6 +49,7 @@ namespace FluentTry
     }
 
     public interface IFinalizableTryOperation<out TContext> : IFinalizableTryOperationNoContext
+        where TContext : class
     {
         IFinalizedTryOperation Finally(Action<TContext> handler);
     }
@@ -43,6 +61,7 @@ namespace FluentTry
     }
 
     public interface IFinalizableTryAsyncOperation<TContext> : IFinalizableTryAsyncOperationNoContext
+        where TContext : class
     {
         IFinalizedTryAsyncOperation Finally(Action<TContext> handler);
         IFinalizedTryAsyncOperation FinallyAsync(Func<TContext, Task> handler);
@@ -59,6 +78,7 @@ namespace FluentTry
     }
 
     public interface IHandleableTryOperation<TContext> : IFinalizableTryOperation<TContext>
+        where TContext : class
     {
         ITryOperation<TContext> Swallow();
         ITryOperation<TContext> Swallow<TException>() where TException : Exception;
@@ -84,6 +104,7 @@ namespace FluentTry
     }
 
     public interface IHandleableTryAsyncOperation<TContext> : IFinalizableTryAsyncOperation<TContext>
+        where TContext : class
     {
         ITryAsyncOperation<TContext> Swallow();
         ITryAsyncOperation<TContext> Swallow<TException>() where TException : Exception;
@@ -113,11 +134,13 @@ namespace FluentTry
     }
 
     public interface ITryOperation<TContext> : IExecutableOperation, IHandleableTryOperation<TContext>, IConfigurableTryOperation
+        where TContext : class
     {
 
     }
 
     public interface ITryAsyncOperation<TContext> : IExecutableAsyncOperation, IHandleableTryAsyncOperation<TContext>, IConfigurableTryOperation
+        where TContext : class
     {
 
     }
@@ -154,6 +177,7 @@ namespace FluentTry
     }
 
     public interface IFinalizableTryOperation<out TContext, T> : IFinalizableTryOperationNoContext<T>
+        where TContext : class
     {
         IFinalizedTryOperation<T> Finally(Action<TContext> handler);
     }
@@ -165,12 +189,13 @@ namespace FluentTry
     }
 
     public interface IFinalizableTryAsyncOperation<TContext, T> : IFinalizableTryAsyncOperationNoContext<T>
+        where TContext : class
     {
         IFinalizedTryAsyncOperation<T> Finally(Action<TContext> handler);
         IFinalizedTryAsyncOperation<T> FinallyAsync(Func<TContext, Task> handler);
     }
 
-    public interface IHandleableTryOperationNoContext<T> : IFinalizableTryOperation<T>
+    public interface IHandleableTryOperationNoContext<T> : IFinalizableTryOperationNoContext<T>
     {
         ITryOperationNoContext<T> Swallow();
         ITryOperationNoContext<T> Swallow<TException>() where TException : Exception;
@@ -185,6 +210,7 @@ namespace FluentTry
     }
 
     public interface IHandleableTryOperation<TContext, T> : IFinalizableTryOperation<TContext, T>
+        where TContext : class
     {
         ITryOperation<TContext, T> Swallow();
         ITryOperation<TContext, T> Swallow<TException>() where TException : Exception;
@@ -222,9 +248,10 @@ namespace FluentTry
         ITryAsyncOperationNoContext<T> CatchAsync(Func<Task<T>> handler);
         ITryAsyncOperationNoContext<T> CatchAsync<TException>(Func<Task<T>> handler) where TException : Exception;
         ITryAsyncOperationNoContext<T> CatchAsync<TException>(Func<TException, Task<T>> handler) where TException : Exception;
-   }
+    }
 
     public interface IHandleableTryAsyncOperation<TContext, T> : IFinalizableTryAsyncOperation<TContext, T>
+        where TContext : class
     {
         ITryAsyncOperation<TContext, T> Swallow();
         ITryAsyncOperation<TContext, T> Swallow<TException>() where TException : Exception;
@@ -261,6 +288,7 @@ namespace FluentTry
     }
 
     public interface ITryOperation<TContext, T> : IExecutableOperation<T>, IHandleableTryOperation<TContext, T>, IConfigurableTryOperation
+        where TContext : class
     {
 
     }
@@ -271,6 +299,7 @@ namespace FluentTry
     }
 
     public interface ITryAsyncOperation<TContext, T> : IExecutableAsyncOperation<T>, IHandleableTryAsyncOperation<TContext, T>, IConfigurableTryOperation
+        where TContext : class
     {
 
     }
@@ -290,6 +319,7 @@ namespace FluentTry
     #region Exception Handlers
 
     internal interface IExceptionHandler<TContext, T>
+        where TContext : class
     {
         T Execute(TContext context, Exception e);
         Task<T> ExecuteAsync(TContext context, Exception e);
@@ -297,6 +327,7 @@ namespace FluentTry
 
     internal class ExceptionHandler<TException, TContext, T> : IExceptionHandler<TContext, T>
         where TException : Exception
+        where TContext : class
     {
         private readonly Delegate executor;
 
@@ -364,11 +395,11 @@ namespace FluentTry
                 var result = Execute(context, e);
                 return Task.FromResult(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Task.FromException<T>(ex);
             }
-            
+
         }
 
         public Task<T> ExecuteAsync(TContext context, Exception e)
@@ -379,6 +410,7 @@ namespace FluentTry
 
     internal class ExceptionAsyncHandler<TException, TContext, T> : IExceptionHandler<TContext, T>
         where TException : Exception
+        where TContext : class
     {
         private readonly Delegate executor;
 
@@ -450,9 +482,33 @@ namespace FluentTry
         }
     }
 
-    internal class ExceptionHandlers<TContext, T>
+    public enum ExceptionHandlerSequenceBehaviour
     {
-        private readonly Dictionary<Type, IExceptionHandler<TContext, T>> handlers = new Dictionary<Type, IExceptionHandler<TContext, T>>();
+        ThrowIfNotValid,
+        AutoOrder,
+        IgnoreAndGetFirst
+    }
+
+    public class DuplicateExceptionHandlerException : Exception
+    {
+        public DuplicateExceptionHandlerException() 
+            : base($"Exception types with multiple handlers detected.")
+        {
+        }
+    }
+
+    public class InvalidExceptionHandlerSequenceException : Exception
+    {
+        public InvalidExceptionHandlerSequenceException()
+            : base($"The sequence of exception handlers has detected super classes before sub classes.")
+        {
+        }
+    }
+
+    internal class ExceptionHandlers<TContext, T>
+        where TContext : class
+    {
+        private readonly Dictionary<Type, List<IExceptionHandler<TContext, T>>> handlers = new Dictionary<Type, List<IExceptionHandler<TContext, T>>>();
         private IExceptionHandler<TContext, T> finallyHandler = null;
 
         public IExceptionHandler<TContext, T> GetHandler<TException>()
@@ -466,9 +522,37 @@ namespace FluentTry
             return finallyHandler;
         }
 
+        public IExceptionHandler<TContext, T> GetHandler(Type exceptionType, ExceptionHandlerSequenceBehaviour exceptionTypeSequenceBehaviour)
+        {
+            switch(exceptionTypeSequenceBehaviour)
+            {
+                case ExceptionHandlerSequenceBehaviour.ThrowIfNotValid:
+                    if (!AssertNoDuplicates())
+                        throw new DuplicateExceptionHandlerException();
+                    if (!AssertInheritanceHierarchy())
+                        throw new InvalidExceptionHandlerSequenceException();
+                    return GetHandler(exceptionType);
+                case ExceptionHandlerSequenceBehaviour.AutoOrder:
+                    if (!AssertNoDuplicates())
+                        throw new DuplicateExceptionHandlerException();
+                    return GetSortedHandler(exceptionType);
+                case ExceptionHandlerSequenceBehaviour.IgnoreAndGetFirst:
+                    return GetHandler(exceptionType);
+                default:
+                    throw new NotSupportedException("Unsupported ExceptionHandlerSequenceBehaviour value");
+            }
+        }
+
         public IExceptionHandler<TContext, T> GetHandler(Type exceptionType)
         {
-            return handlers.FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value;
+            return handlers.FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value.First();
+        }
+
+        public IExceptionHandler<TContext, T> GetSortedHandler(Type exceptionType)
+        {
+            return handlers
+                .OrderByDescending(x => x.Key.GetHierarchyDepth())
+                .FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value.First();
         }
 
         public void AddHandler<TException>(Action<TException> handler)
@@ -586,16 +670,31 @@ namespace FluentTry
         {
             finallyHandler = new ExceptionAsyncHandler<Exception, TContext, T>(handler);
         }
+
+        public bool AssertNoDuplicates()
+        {
+            return !handlers.Any(x => x.Value.Count > 1);
+        }
+
+        public bool AssertInheritanceHierarchy()
+        {
+            var depthSequence = handlers.Keys.Select(x => x.GetHierarchyDepth()).ToList();
+            var orderedDepthSequence = depthSequence.OrderByDescending(x => x);
+
+            return depthSequence.SequenceEqual(orderedDepthSequence);
+        }
     }
 
     #endregion Exception Handlers
 
-    internal sealed class TryOperation<TContext, T> : ITryOperation<TContext,T>, ITryOperation<TContext>, IFinalizedTryOperation, IFinalizedTryOperation<T> 
+    internal sealed class TryOperation<TContext, T> : ITryOperation<TContext, T>, ITryOperation<TContext>, IFinalizedTryOperation, IFinalizedTryOperation<T>, IConfigurableTryOperationInternal
+        where TContext : class
     {
         private readonly ExceptionHandlers<TContext, T> handlers = new ExceptionHandlers<TContext, T>();
-
         private readonly Func<TContext, T> operation;
         private readonly TContext context;
+
+        ExceptionHandlerSequenceBehaviour IConfigurableTryOperationInternal.ExceptionHandlerSequenceBehaviour { get; set; }
 
         public TryOperation(Func<TContext, T> operation, TContext context)
         {
@@ -769,7 +868,7 @@ namespace FluentTry
             }
             catch (Exception e)
             {
-                var handler = handlers.GetHandler(e.GetType());
+                var handler = handlers.GetHandler(e.GetType(), ((IConfigurableTryOperationInternal)this).ExceptionHandlerSequenceBehaviour);
                 if (handler == null) throw;
                 return handler.Execute(context, e);
             }
@@ -792,7 +891,7 @@ namespace FluentTry
             }
             catch (Exception e)
             {
-                var handler = handlers.GetHandler(e.GetType());
+                var handler = handlers.GetHandler(e.GetType(), ((IConfigurableTryOperationInternal)this).ExceptionHandlerSequenceBehaviour);
 
                 if (handler == null)
                     return new TryResult<T>(e);
@@ -815,11 +914,14 @@ namespace FluentTry
         #endregion Execute
     }
 
-    internal sealed class TryAsyncOperation<TContext, T> : ITryAsyncOperation<TContext, T>, ITryAsyncOperation<TContext>, IFinalizedTryAsyncOperation, IFinalizedTryAsyncOperation<T>
+    internal sealed class TryAsyncOperation<TContext, T> : ITryAsyncOperation<TContext, T>, ITryAsyncOperation<TContext>, IFinalizedTryAsyncOperation, IFinalizedTryAsyncOperation<T>, IConfigurableTryOperationInternal
+        where TContext : class
     {
         private readonly ExceptionHandlers<TContext, T> handlers = new ExceptionHandlers<TContext, T>();
         private readonly Func<TContext, Task<T>> operation;
         private readonly TContext context;
+
+        ExceptionHandlerSequenceBehaviour IConfigurableTryOperationInternal.ExceptionHandlerSequenceBehaviour { get; set; }
 
         public TryAsyncOperation(Func<TContext, Task<T>> operation, TContext context)
         {
@@ -1110,13 +1212,13 @@ namespace FluentTry
             }
             catch (Exception e)
             {
-                var handler = handlers.GetHandler(e.GetType());
+                var handler = handlers.GetHandler(e.GetType(), ((IConfigurableTryOperationInternal)this).ExceptionHandlerSequenceBehaviour);
                 if (handler == null) throw;
                 try
                 {
                     return await handler.ExecuteAsync(context, e).ConfigureAwait(false);
                 }
-                catch(Exception rethrownException)
+                catch (Exception rethrownException)
                 {
                     throw rethrownException;
                 }
@@ -1134,21 +1236,22 @@ namespace FluentTry
         public Task<T> ExecuteAsync2()
         {
             return operation(context)
-                .ContinueWith<T,T>((task, context) =>
+                .ContinueWith<T, T>((task, context) =>
+                 {
+                     if (task.IsFaulted)
+                     {
+                         var handler = handlers.GetHandler(task.Exception.GetType(), ((IConfigurableTryOperationInternal)this).ExceptionHandlerSequenceBehaviour);
+                         if (handler == null) throw task.Exception;
+
+                         return handler.ExecuteAsync((TContext)context, task.Exception);
+                     }
+
+                     return Task.FromResult(default(T));
+                 }, context)
+                .ContinueWith<T, T>((task, context) =>
                 {
-                    if (task.IsFaulted)
-                    {
-                        var handler = handlers.GetHandler(task.Exception.GetType());
-                        if (handler == null) throw task.Exception;
-
-                        return handler.ExecuteAsync((TContext)context, task.Exception);
-                    }
-
-                    return Task.FromResult(default(T));
-                }, context)
-                .ContinueWith<T,T>((task, context) => {
                     var result = task.Status == TaskStatus.RanToCompletion ? task.Result : default;
-                    
+
                     var finallyHandler = handlers.GetFinallyHandler();
                     if (finallyHandler != null)
                     {
@@ -1214,6 +1317,7 @@ namespace FluentTry
     #region Factory
 
     public class ContextualTryBuilder<TContext>
+        where TContext : class
     {
         private readonly TContext context;
 
@@ -1246,6 +1350,7 @@ namespace FluentTry
     public static class Try
     {
         public static ContextualTryBuilder<TContext> With<TContext>(TContext context)
+            where TContext : class
         {
             return new ContextualTryBuilder<TContext>(context);
         }
@@ -1262,11 +1367,13 @@ namespace FluentTry
         }
 
         internal static ITryOperation<TContext> Do<TContext>(TContext context, Action<TContext> operation)
+            where TContext : class
         {
             return new TryOperation<TContext, Void>((ctx) => { operation(ctx); return Void.Value; }, context);
         }
 
         internal static ITryOperation<TContext, T> Do<TContext, T>(TContext context, Func<TContext, T> operation)
+            where TContext : class
         {
             return new TryOperation<TContext, T>(operation, context);
         }
@@ -1284,11 +1391,13 @@ namespace FluentTry
         }
 
         internal static ITryAsyncOperation<TContext> DoAsync<TContext>(TContext context, Func<TContext, Task> operation)
+            where TContext : class
         {
             return new TryAsyncOperation<TContext, Void>((ctx) => operation(ctx).ContinueWith(_ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion), context);
         }
 
         internal static ITryAsyncOperation<TContext, T> DoAsync<TContext, T>(TContext context, Func<TContext, Task<T>> operation)
+            where TContext : class
         {
             return new TryAsyncOperation<TContext, T>(operation, context);
         }

@@ -1,7 +1,5 @@
-﻿1. Sequence / Ordering
-2. Option for sequence (auto reorder, throw, ignore) - ignore needs lookups.first
-3. No context interfaces
-4. Move configuration to builder?
-5. Tests
-6. Docs (make note async without async notation are not awaited)
-7. Context = reference type
+﻿- No context interfaces
+- Move configuration to builder or keep IConfigurable pattern?
+- Merge sync/async
+- Tests
+- Docs (make note async without async notation are not awaited)

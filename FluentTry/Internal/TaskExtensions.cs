@@ -7,17 +7,6 @@ using System.Threading.Tasks;
 
 namespace FluentTry
 {
-    public static class ExceptionExtensions
-    {
-        public static Exception FlattenRecursive(this AggregateException aggregateException)
-        {
-            var flattenedException = aggregateException.Flatten();
-            while (flattenedException.InnerException is AggregateException)
-                flattenedException = flattenedException.Flatten();
-            return flattenedException;
-        }
-    }
-
     public static class TaskExtensions
     {
         public async static Task<T> GetValueOrThrow<T>(this Task<ITryResult<T>> task)
