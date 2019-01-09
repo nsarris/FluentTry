@@ -839,44 +839,6 @@ namespace FluentTry
             }
         }
 
-        public Task<T> ExecuteAsync2()
-        {
-            return operation(context)
-                .ContinueWith<T, T>((task, context) =>
-                 {
-                     if (task.IsFaulted)
-                     {
-                         var handler = handlers.GetHandler(task.Exception.GetType(), configuration.ExceptionHandlerSequenceBehaviour);
-                         if (handler == null) throw task.Exception;
-
-                         return handler.ExecuteAsync((TContext)context, task.Exception);
-                     }
-
-                     return Task.FromResult(default(T));
-                 }, context)
-                .ContinueWith<T, T>((task, context) =>
-                {
-                    var result = task.Status == TaskStatus.RanToCompletion ? task.Result : default;
-
-                    var finallyHandler = handlers.GetFinallyHandler();
-                    if (finallyHandler != null)
-                    {
-                        if (!task.IsFaulted)
-                            return finallyHandler.ExecuteAsync((TContext)context, null).ContinueWith(t => result);
-                        else
-                            return finallyHandler.ExecuteAsync((TContext)context, null).ContinueWith<T, T>(t => Task.FromException<T>(task.Exception.FlattenRecursive().InnerException));
-                    }
-                    else
-                    {
-                        if (!task.IsFaulted)
-                            return Task.FromResult(result);
-                        else
-                            return Task.FromException<T>(task.Exception);
-                    }
-
-                }, context);
-        }
-
         Task<ITryResult> IExecutableAsyncOperation.ExecuteSafeAsync()
         {
             return ExecuteSafeAsync().ContinueWith(t => t.Result as ITryResult);
@@ -912,11 +874,7 @@ namespace FluentTry
             }
         }
 
-
-
-
-
-        #endregion Execute
+        #endregion ExecuteAsync
     }
 
     internal class OperationWrapper<TContext, T>
@@ -952,37 +910,7 @@ namespace FluentTry
         }
     }
 
-    internal class DelegateWrapper<T1,T2>
-    {
-        private readonly Func<T1, Task<T2>> asyncOperation;
-        private readonly Func<T1, T2> syncOperation;
 
-        public DelegateWrapper(Func<T1, Task<T2>> operation)
-        {
-            this.asyncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
-        }
-
-        public DelegateWrapper(Func<T1, T2> operation)
-        {
-            this.syncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
-        }
-
-        public T2 Execute(T1 arg1)
-        {
-            if (asyncOperation != null)
-                return AsyncTaskHelper.RunSync(() => asyncOperation(arg1));
-            else
-                return syncOperation(arg1);
-        }
-
-        public Task<T2> ExecuteAsync(T1 arg1)
-        {
-            if (asyncOperation != null)
-                return asyncOperation(arg1);
-            else
-                return Task.FromResult(syncOperation(arg1));
-        }
-    }
 
     #region Factory
 

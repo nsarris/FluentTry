@@ -1,0 +1,66 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<# var numOfGenericParameters = 16; #>
+using System;
+using System.Threading.Tasks;
+
+namespace FluentTry
+{
+<# for (var i = 0; i <= numOfGenericParameters; i++) { 
+	var generics = string.Join(", ",Enumerable.Range(1, i).Select(x => "TArg" + x));
+	var className = $"FuncWrapper<{generics}{(i > 0 ? ", " : "")}TResult>";
+	var func = $"Func<{generics}{(i > 0 ? ", " : "")}TResult>";
+	var asyncFunc = $"Func<{generics}{(i > 0 ? ", " : "")}Task<TResult>>";
+	var executeArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"TArg{x} arg{x}"));
+	var args = string.Join(", ",Enumerable.Range(1, i).Select(x => $"arg{x}"));
+#>	internal class <#= className #>
+    {
+        private readonly <#= asyncFunc #> asyncOperation;
+        private readonly <#= func #> syncOperation;
+
+		public Delegate Delegate => (Delegate)syncOperation ?? asyncOperation;
+
+        public FuncWrapper(<#= asyncFunc #> operation)
+        {
+            this.asyncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
+        }
+
+        public FuncWrapper(<#= func #> operation)
+        {
+            this.syncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
+        }
+
+        public TResult Execute(<#= executeArgs #>)
+        {
+            if (asyncOperation != null)
+                return AsyncTaskHelper.RunSync(() => asyncOperation(<#= args #>));
+            else
+                return syncOperation(<#= args #>);
+        }
+
+        public Task<TResult> ExecuteAsync(<#= executeArgs #>)
+        {
+            if (asyncOperation != null)
+                return asyncOperation(<#= args #>);
+            else
+			{
+				try
+                {
+                    return Task.FromResult(syncOperation(<#= args #>));
+                }
+                catch (Exception ex)
+                {
+                    return Task.FromException<TResult>(ex);
+                }
+			}
+        }
+
+		public static implicit operator Delegate(<#= className #> funcWrapper) => funcWrapper.Delegate;
+    }
+
+<# } #>
+}
