@@ -20,18 +20,20 @@ namespace ConsoleApp10
             {
                 var result1 =
                     await Try
-                        .With(new TestContext
+                        .WithContext(new TestContext
                         {
                             Id = 1,
                             Name = "Test"
                         })
+                        .WithConfiguration(config => config
+                            .WithExceptionHandlerSequenceBehaviour(ExceptionHandlerSequenceBehaviour.AutoOrder)
+                        )
                         .DoAsync(async (context) =>
                         {
                             await Task.Delay(100);
                             throw new InvalidOperationException();
                             return 5;
                         })
-                        .WithExceptionHandlerSequenceBehaviour(ExceptionHandlerSequenceBehaviour.AutoOrder)
                         //.Swallow()
                         //.CatchAsync<Exception>(async (ex, context) => { Console.WriteLine("Caught " + nameof(Exception)); await Task.Delay(1); return 2; })
                         //.Catch<Exception>(async ex => { await Task.Delay(2000); Console.WriteLine("Caught " + nameof(Exception)); await Task.Delay(1); })

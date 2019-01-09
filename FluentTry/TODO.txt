@@ -1,5 +1,4 @@
 ﻿- No context interfaces
-- Move configuration to builder or keep IConfigurable pattern?
 - Merge sync/async
 - Tests
 - Docs (make note async without async notation are not awaited)
