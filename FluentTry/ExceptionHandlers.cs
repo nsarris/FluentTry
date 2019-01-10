@@ -106,49 +106,49 @@ namespace FluentTry
         public void AddAsyncHandler<TException>(Func<TException, Task> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<Task> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<TException, Task<T>> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<Task<T>> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<TContext, Task> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<TException, TContext, Task> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<TContext, Task<T>> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void AddAsyncHandler<TException>(Func<Exception, TContext, Task<T>> handler)
             where TException : Exception
         {
-            handlers.Add(typeof(TException), new ExceptionAsyncHandler<TException, TContext, T>(handler));
+            handlers.Add(typeof(TException), new ExceptionHandler<TException, TContext, T>(handler));
         }
 
         public void SetFinallyHandler(Action handler)
@@ -158,7 +158,7 @@ namespace FluentTry
 
         public void SetAsyncFinallyHandler(Func<Task> handler)
         {
-            finallyHandler = new ExceptionAsyncHandler<Exception, TContext, T>(handler);
+            finallyHandler = new ExceptionHandler<Exception, TContext, T>(handler);
         }
 
         public void SetFinallyHandler(Action<TContext> handler)
@@ -168,7 +168,7 @@ namespace FluentTry
 
         public void SetAsyncFinallyHandler(Func<TContext, Task> handler)
         {
-            finallyHandler = new ExceptionAsyncHandler<Exception, TContext, T>(handler);
+            finallyHandler = new ExceptionHandler<Exception, TContext, T>(handler);
         }
 
         public bool AssertNoDuplicates()

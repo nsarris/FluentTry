@@ -9,6 +9,4 @@ namespace FluentTry
         {
         }
     }
-
-    #endregion Static Entry point
 }

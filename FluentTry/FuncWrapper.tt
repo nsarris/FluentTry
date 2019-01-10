@@ -17,49 +17,66 @@ namespace FluentTry
 	var asyncFunc = $"Func<{generics}{(i > 0 ? ", " : "")}Task<TResult>>";
 	var executeArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"TArg{x} arg{x}"));
 	var args = string.Join(", ",Enumerable.Range(1, i).Select(x => $"arg{x}"));
-#>	internal class <#= className #>
+#>	public interface I<#= className #>
+	{
+		Delegate Delegate { get; }
+		TResult Invoke(<#= executeArgs #>);
+		Task<TResult> InvokeAsync(<#= executeArgs #>);
+	}
+
+	internal class <#= className #> : I<#= className #>
     {
-        private readonly <#= asyncFunc #> asyncOperation;
-        private readonly <#= func #> syncOperation;
+        private readonly <#= func #> operation;
 
-		public Delegate Delegate => (Delegate)syncOperation ?? asyncOperation;
-
-        public FuncWrapper(<#= asyncFunc #> operation)
-        {
-            this.asyncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
-        }
+		public Delegate Delegate => operation;
 
         public FuncWrapper(<#= func #> operation)
         {
-            this.syncOperation = operation ?? throw new ArgumentNullException(nameof(operation));
+            this.operation = operation ?? throw new ArgumentNullException(nameof(operation));
         }
 
-        public TResult Execute(<#= executeArgs #>)
+        public TResult Invoke(<#= executeArgs #>)
         {
-            if (asyncOperation != null)
-                return AsyncTaskHelper.RunSync(() => asyncOperation(<#= args #>));
-            else
-                return syncOperation(<#= args #>);
+            return operation(<#= args #>);
         }
 
-        public Task<TResult> ExecuteAsync(<#= executeArgs #>)
+        public Task<TResult> InvokeAsync(<#= executeArgs #>)
         {
-            if (asyncOperation != null)
-                return asyncOperation(<#= args #>);
-            else
-			{
-				try
-                {
-                    return Task.FromResult(syncOperation(<#= args #>));
-                }
-                catch (Exception ex)
-                {
-                    return Task.FromException<TResult>(ex);
-                }
-			}
+			try
+            {
+                return Task.FromResult(operation(<#= args #>));
+            }
+            catch (Exception ex)
+            {
+                return Task.FromException<TResult>(ex);
+            }
         }
 
 		public static implicit operator Delegate(<#= className #> funcWrapper) => funcWrapper.Delegate;
+    }
+
+	internal class Async<#= className #> : I<#= className #>
+    {
+        private readonly <#= asyncFunc #> operation;
+        
+		public Delegate Delegate => operation;
+
+        public AsyncFuncWrapper(<#= asyncFunc #> operation)
+        {
+            this.operation = operation ?? throw new ArgumentNullException(nameof(operation));
+        }
+
+        public TResult Invoke(<#= executeArgs #>)
+        {
+            return AsyncTaskHelper.RunSync(() => operation(<#= args #>));
+        }
+
+        public Task<TResult> InvokeAsync(<#= executeArgs #>)
+        {
+            return operation(<#= args #>);
+        }
+
+		public static implicit operator Delegate(Async<#= className #> funcWrapper) => funcWrapper.Delegate;
     }
 
 <# } #>

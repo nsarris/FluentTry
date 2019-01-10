@@ -877,41 +877,6 @@ namespace FluentTry
         #endregion ExecuteAsync
     }
 
-    internal class OperationWrapper<TContext, T>
-        where TContext : class
-    {
-        private readonly Func<TContext, Task<T>> asyncOperation;
-        private readonly Func<TContext, T> syncOperation;
-
-        public OperationWrapper(Func<TContext, Task<T>> operation)
-        {
-            this.asyncOperation = operation;
-        }
-
-        public OperationWrapper(Func<TContext, T> operation)
-        {
-            this.syncOperation = operation;
-        }
-
-        public T Execute(TContext context)
-        {
-            if (asyncOperation != null)
-                return AsyncTaskHelper.RunSync(() => asyncOperation(context));
-            else
-                return syncOperation(context);
-        }
-
-        public Task<T> ExecuteAsync(TContext context)
-        {
-            if (asyncOperation != null)
-                return asyncOperation(context);
-            else
-                return Task.FromResult(syncOperation(context));
-        }
-    }
-
-
-
     #region Factory
 
     public static class Try
