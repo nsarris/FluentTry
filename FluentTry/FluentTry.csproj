@@ -7,19 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TODO.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TODO.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ActionWrapper.tt">
+    <None Update="Infrastructure\ActionWrapper.tt">
       <LastGenOutput>ActionWrapper.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="FuncWrapper.tt">
+    <None Update="Infrastructure\FuncWrapper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FuncWrapper.cs</LastGenOutput>
     </None>
@@ -30,12 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ActionWrapper.cs">
+    <Compile Update="Infrastructure\ActionWrapper.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ActionWrapper.tt</DependentUpon>
     </Compile>
-    <Compile Update="FuncWrapper.cs">
+    <Compile Update="Infrastructure\FuncWrapper.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>FuncWrapper.tt</DependentUpon>

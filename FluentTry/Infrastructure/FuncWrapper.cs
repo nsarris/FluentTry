@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FluentTry
 {
-	public interface IFuncWrapper<TResult>
+	internal interface IFuncWrapper<TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke();
@@ -65,7 +65,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TResult>
+	internal interface IFuncWrapper<TArg1, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1);
@@ -127,7 +127,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2);
@@ -189,7 +189,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3);
@@ -251,7 +251,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4);
@@ -313,7 +313,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5);
@@ -375,7 +375,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6);
@@ -437,7 +437,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7);
@@ -499,7 +499,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8);
@@ -561,7 +561,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9);
@@ -623,7 +623,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10);
@@ -685,7 +685,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11);
@@ -747,7 +747,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12);
@@ -809,7 +809,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13);
@@ -871,7 +871,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14);
@@ -933,7 +933,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14, TArg15 arg15);
@@ -995,7 +995,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TResult> funcWrapper) => funcWrapper.Delegate;
     }
 
-	public interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TArg16, TResult>
+	internal interface IFuncWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TArg16, TResult>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14, TArg15 arg15, TArg16 arg16);

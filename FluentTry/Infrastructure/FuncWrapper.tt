@@ -17,7 +17,7 @@ namespace FluentTry
 	var asyncFunc = $"Func<{generics}{(i > 0 ? ", " : "")}Task<TResult>>";
 	var executeArgs = string.Join(", ",Enumerable.Range(1, i).Select(x => $"TArg{x} arg{x}"));
 	var args = string.Join(", ",Enumerable.Range(1, i).Select(x => $"arg{x}"));
-#>	public interface I<#= className #>
+#>	internal interface I<#= className #>
 	{
 		Delegate Delegate { get; }
 		TResult Invoke(<#= executeArgs #>);

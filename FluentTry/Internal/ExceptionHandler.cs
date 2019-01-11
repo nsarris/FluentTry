@@ -110,59 +110,6 @@ namespace FluentTry
             }
         }
 
-        //private Func<TContext, TException, T> GetExceptionHandler(Delegate executor)
-        //{
-        //    switch (executor)
-        //    {
-        //        case Action actionHandler:
-        //            return (_, __) => { actionHandler(); return default; };
-        //        case Action<TException> actionWithException:
-        //            return (_, e) => { actionWithException(e); return default; };
-        //        case Func<T> funcHandler:
-        //            return (_, __) => funcHandler(); 
-        //        case Func<TException, T> funcWithException:
-        //            return (_, __) => funcWithException(e);
-        //        case Action<TContext> actionHandlerWithContext:
-        //            return (context, __) => { actionHandlerWithContext(context); return default; };
-        //        case Action<TException, TContext> actionHandlerWithExceptionAndContext:
-        //            return (context, e) => { actionHandlerWithExceptionAndContext(e, context); return default; };
-        //        case Func<TContext, T> funcHandlerWithContext:
-        //            return (context, __) => funcHandlerWithContext(context);
-        //        case Func<TException, TContext, T> funcHandlerWithExceptionAndContext:
-        //            return (context, e) => funcHandlerWithExceptionAndContext(e, context);
-        //        default:
-        //            throw new NotSupportedException("Unsupported exception handler delegate type.");
-        //    }
-        //}
-        //private Func<TContext, TException, Task<T>> GetExceptionAsyncHandler(Delegate executor)
-        //{
-        //    switch (executor)
-        //    {
-        //        case Func<Task<T>> funcHandler:
-        //            return (_, __) => funcHandler();
-        //        case Func<TException, Task<T>> funcWithException:
-        //            return (_, e) => funcWithException(e);
-        //        case Func<Task> actionHandler:
-        //            return (_, __) => actionHandler().ContinueWith(___ => default(T), TaskContinuationOptions.OnlyOnRanToCompletion);
-        //        case Func<TException, Task> actionWithException:
-        //            return (_, e) => actionWithException(e).ContinueWith(___ => default(T), TaskContinuationOptions.OnlyOnRanToCompletion);
-        //        case Func<TContext, Task<T>> funcHandlerWithContext:
-        //            return (context, __) => funcHandlerWithContext(context);
-        //        case Func<TException, TContext, Task<T>> funcWithExceptionAndContext:
-        //            return (context, e) => funcWithExceptionAndContext(e, context);
-        //        case Func<TContext, Task> actionHandlerWithContext:
-        //            return (context, __) => actionHandlerWithContext(context).ContinueWith(_ => default(T), TaskContinuationOptions.OnlyOnRanToCompletion);
-        //        case Func<TException, TContext, Task> actionWithExceptionAndContext:
-        //            return (context, e) => actionWithExceptionAndContext(e, context).ContinueWith(_ => default(T), TaskContinuationOptions.OnlyOnRanToCompletion);
-
-        //        default:
-        //            throw new NotSupportedException("Unsupported exception handler delegate type.");
-        //    }
-        //}
-
-
-
-
         public T Execute(TContext context, TException e)
         {
             return executor.Invoke(context, e);

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FluentTry
 {
-	public interface IActionWrapper
+	internal interface IActionWrapper
 	{
 		Delegate Delegate { get; }
 		void Invoke();
@@ -66,7 +66,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1>
+	internal interface IActionWrapper<TArg1>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1);
@@ -129,7 +129,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2>
+	internal interface IActionWrapper<TArg1, TArg2>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2);
@@ -192,7 +192,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3);
@@ -255,7 +255,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4);
@@ -318,7 +318,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5);
@@ -381,7 +381,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6);
@@ -444,7 +444,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7);
@@ -507,7 +507,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8);
@@ -570,7 +570,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9);
@@ -633,7 +633,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10);
@@ -696,7 +696,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11);
@@ -759,7 +759,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12);
@@ -822,7 +822,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13);
@@ -885,7 +885,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14);
@@ -948,7 +948,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14, TArg15 arg15);
@@ -1011,7 +1011,7 @@ namespace FluentTry
 		public static implicit operator Delegate(AsyncActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15> actionWrapper) => actionWrapper.Delegate;
     }
 
-	public interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TArg16>
+	internal interface IActionWrapper<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TArg10, TArg11, TArg12, TArg13, TArg14, TArg15, TArg16>
 	{
 		Delegate Delegate { get; }
 		void Invoke(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9, TArg10 arg10, TArg11 arg11, TArg12 arg12, TArg13 arg13, TArg14 arg14, TArg15 arg15, TArg16 arg16);

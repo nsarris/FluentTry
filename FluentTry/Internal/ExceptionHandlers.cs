@@ -45,14 +45,14 @@ namespace FluentTry
 
         public IExceptionHandler<TContext, T> GetHandler(Type exceptionType)
         {
-            return handlers.FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value.First();
+            return handlers.FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value?.FirstOrDefault();
         }
 
         public IExceptionHandler<TContext, T> GetSortedHandler(Type exceptionType)
         {
             return handlers
                 .OrderByDescending(x => x.Key.GetHierarchyDepth())
-                .FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value.First();
+                .FirstOrDefault(handler => handler.Key.IsAssignableFrom(exceptionType)).Value?.FirstOrDefault();
         }
 
         public void AddHandler<TException>(Action<TException> handler)

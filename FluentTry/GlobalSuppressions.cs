@@ -5,5 +5,5 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3445:Exceptions should not be explicitly rethrown", Justification = "<Pending>", Scope = "member", Target = "~M:FluentTry.TryOperation`1.Execute~FluentTry.TryResult{`0}")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3445:Exceptions should not be explicitly rethrown", Justification = "<Pending>", Scope = "member", Target = "~M:FluentTry.TryAsyncOperation`2.ExecuteAsync~System.Threading.Tasks.Task{`1}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3445:Exceptions should not be explicitly rethrown", Justification = "<Pending>", Scope = "member", Target = "~M:FluentTry.TryOperation`2.ExecuteAsync~System.Threading.Tasks.Task{`1}")]
 

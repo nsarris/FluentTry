@@ -2,9 +2,7 @@
 
 namespace FluentTry
 {
-    #region Result
-
-    public class TryResult<T> : ITryResult<T>
+    internal class TryResult<T> : ITryResult<T>
     {
         public T Value { get; }
         public T GetValueOrThrow()
@@ -42,6 +40,4 @@ namespace FluentTry
             return tryResult.Value;
         }
     }
-
-    #endregion Static Entry point
 }

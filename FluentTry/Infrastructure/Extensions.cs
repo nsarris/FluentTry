@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FluentTry
 {
-    static class DictionaryExtensions
+    internal static class DictionaryExtensions
     {
         public static void Add<TKey,TElement>(this IDictionary<TKey,List<TElement>> dictionary, TKey key, TElement element)
         {
@@ -13,14 +13,13 @@ namespace FluentTry
                 elementList.Add(element);
             else
             {
-                elementList = new List<TElement>();
-                elementList.Add(element);
+                elementList = new List<TElement>{ element };
                 dictionary.Add(key, elementList);
             }
         }
     }
 
-    public static class ExceptionExtensions
+    internal static class ExceptionExtensions
     {
         public static Exception FlattenRecursive(this AggregateException aggregateException)
         {
@@ -31,7 +30,7 @@ namespace FluentTry
         }
     }
 
-    static class TypeExtensions
+    internal static class TypeExtensions
     {
         public static IEnumerable<Type> GetHierarchy(this Type type)
         {

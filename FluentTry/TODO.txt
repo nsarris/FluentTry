@@ -1,4 +1,0 @@
-﻿- No context interfaces
-- Merge sync/async
-- Tests
-- Docs (make note async without async notation are not awaited)

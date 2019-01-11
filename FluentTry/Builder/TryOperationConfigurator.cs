@@ -1,8 +1,5 @@
 ﻿namespace FluentTry
 {
-    #region Factory
-
-
     public class TryOperationConfigurator
     {
         internal TryOpertationConfiguration Configuration { get; } = new TryOpertationConfiguration();
@@ -13,6 +10,4 @@
             return this;
         }
     }
-
-    #endregion Static Entry point
 }

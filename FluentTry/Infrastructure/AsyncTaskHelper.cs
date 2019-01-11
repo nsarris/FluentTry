@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FluentTry
 {
-    static class AsyncTaskHelper
+    internal static class AsyncTaskHelper
     {
         private static readonly TaskFactory taskFactory = new
           TaskFactory(CancellationToken.None,
