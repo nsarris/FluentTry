@@ -28,14 +28,14 @@ namespace FluentTry
             return Try.Do<object, T>(null, (_) => operation(), configuration);
         }
 
-        public ITryOperation DoAsync(Func<Task> operation)
+        public ITryOperation Do(Func<Task> operation)
         {
-            return Try.DoAsync<object>(null, (_) => operation().ContinueWith(__ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion), configuration);
+            return Try.Do<object>(null, (_) => operation().ContinueWith(__ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion), configuration);
         }
 
-        public ITryOperation<T> DoAsync<T>(Func<Task<T>> operation)
+        public ITryOperation<T> Do<T>(Func<Task<T>> operation)
         {
-            return Try.DoAsync<object, T>(null, (_) => operation(), configuration);
+            return Try.Do<object, T>(null, (_) => operation(), configuration);
         }
 
         public TryBuilder<TContext> WithContext<TContext>(TContext context)

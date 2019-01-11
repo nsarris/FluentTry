@@ -42,23 +42,23 @@ namespace FluentTry
 
 
 
-        public static ITryOperation DoAsync(Func<Task> operation)
+        public static ITryOperation Do(Func<Task> operation)
         {
-            return DoAsync<object>(null, (_) => operation().ContinueWith(__ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion));
+            return Do<object>(null, (_) => operation().ContinueWith(__ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion));
         }
 
-        public static ITryOperation<T> DoAsync<T>(Func<Task<T>> operation)
+        public static ITryOperation<T> Do<T>(Func<Task<T>> operation)
         {
-            return DoAsync<object, T>(null, (_) => operation());
+            return Do<object, T>(null, (_) => operation());
         }
 
-        internal static TryOperation<TContext, Void> DoAsync<TContext>(TContext context, Func<TContext, Task> operation, TryOpertationConfiguration configuration = null)
+        internal static TryOperation<TContext, Void> Do<TContext>(TContext context, Func<TContext, Task> operation, TryOpertationConfiguration configuration = null)
             where TContext : class
         {
             return new TryOperation<TContext, Void>((ctx) => operation(ctx).ContinueWith(_ => Void.Value, continuationOptions: TaskContinuationOptions.OnlyOnRanToCompletion), context, configuration);
         }
 
-        internal static TryOperation<TContext, T> DoAsync<TContext, T>(TContext context, Func<TContext, Task<T>> operation, TryOpertationConfiguration configuration = null)
+        internal static TryOperation<TContext, T> Do<TContext, T>(TContext context, Func<TContext, Task<T>> operation, TryOpertationConfiguration configuration = null)
             where TContext : class
         {
             return new TryOperation<TContext, T>(operation, context, configuration);

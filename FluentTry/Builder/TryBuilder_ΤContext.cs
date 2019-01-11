@@ -36,14 +36,14 @@ namespace FluentTry
             return Try.Do(context, operation, configuration);
         }
 
-        public ITryOperationWithContext<TContext> DoAsync(Func<TContext, Task> operation)
+        public ITryOperationWithContext<TContext> Do(Func<TContext, Task> operation)
         {
-            return Try.DoAsync(context, operation, configuration);
+            return Try.Do(context, operation, configuration);
         }
 
-        public ITryOperationWithContext<TContext, T> DoAsync<T>(Func<TContext, Task<T>> operation)
+        public ITryOperationWithContext<TContext, T> Do<T>(Func<TContext, Task<T>> operation)
         {
-            return Try.DoAsync(context, operation, configuration);
+            return Try.Do(context, operation, configuration);
         }
     }
 }
