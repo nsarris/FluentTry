@@ -87,13 +87,13 @@ namespace ConsoleApp10
             ITest<string, int> t = null;
             t.Catch(() => { throw new Exception(); });
             t.Catch<Exception>(() => { throw new Exception(); });
-            t.Catch<object>(() => { throw new Exception(); return 0; });
+            t.Catch(() => { throw new Exception(); return 0; });
             t.Catch<Exception>((e) => { throw e; return 0; });
 
-            t.Catch<Exception>(async (e) => { await Task.Delay(1); throw new Exception(); });
+            t.CatchAsync<Exception>(async (e) => { await Task.Delay(1); throw new Exception(); });
 
             t.Catch<Exception>((e) => 0);
-            t.Catch<Exception>(async (e) => { await Task.Delay(1); return 0; });
+            t.CatchAsync<Exception>(async (Exception e) => { await Task.Delay(1); return 0; });
 
             //t.Catch1(async (Exception e) => { return 0; });
         }
