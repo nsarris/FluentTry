@@ -5,7 +5,7 @@ namespace FluentTry
 {
     public class TryBuilder
     {
-        private TryOpertationConfiguration configuration = new TryOpertationConfiguration();
+        private TryOperationConfiguration configuration = TryOperationConfiguration.Default;
 
         internal TryBuilder()
         {

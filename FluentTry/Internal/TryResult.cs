@@ -30,6 +30,11 @@ namespace FluentTry
             return tryResult.Success;
         }
 
+        public TryResult()
+        {
+            
+        }
+
         public TryResult(T value)
         {
             Value = value;

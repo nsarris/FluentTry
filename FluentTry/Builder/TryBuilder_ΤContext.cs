@@ -7,9 +7,9 @@ namespace FluentTry
         where TContext : class
     {
         private readonly TContext context;
-        private TryOpertationConfiguration configuration = new TryOpertationConfiguration();
+        private TryOperationConfiguration configuration = TryOperationConfiguration.Default;
 
-        internal TryBuilder(TContext context, TryOpertationConfiguration configuration)
+        internal TryBuilder(TContext context, TryOperationConfiguration configuration)
         {
             this.context = context;
             this.configuration = configuration;
