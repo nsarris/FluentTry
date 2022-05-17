@@ -1,0 +1,5 @@
+1. Force state (Void when not specified)?
+2. Introduce Context delegates for exception handlers (return result from context, allow Value, Throw, Retrhow)
+3. Cancellation Tokens
+4. More Tests
+5. Catch with Task on Void (not needed if 2)
