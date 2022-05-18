@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace FluentTry
 {
-    public class TryState<TState>
+    public class TryWith<TState>
     {
         private readonly TState State;
 
-        public TryState(TState State)
+        public TryWith(TState State)
         {
             this.State = State;
         }

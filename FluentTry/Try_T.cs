@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FluentTry
@@ -24,7 +25,7 @@ namespace FluentTry
         private T? result;
         private Exception? exception;
         private ExceptionDispatchInfo? originalDispatchInfo;
-
+        
         public bool IsFaulted => Exception is not null;
 
         public Exception? Exception

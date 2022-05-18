@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FluentTry
@@ -7,9 +8,9 @@ namespace FluentTry
     {
         private static readonly Try<Void> VoidSucess = new(Void.Value);
 
-        public static TryState<T> With<T>(T State)
+        public static TryWith<T> With<T>(T State)
         {
-            return new TryState<T>(State);
+            return new TryWith<T>(State);
         }
 
         public static Try<Void> Execute(Action action)
@@ -104,6 +105,55 @@ namespace FluentTry
             try
             {
                 return new(action(State).ChainAwait(task => new Try<TState, TResult>(State, task)));
+            }
+            catch (Exception ex)
+            {
+                return new(new Try<TState, TResult>(State, ex));
+            }
+        }
+
+        public static async Task<Try<Void>> ExecuteAsync(Func<CancellationToken, Task> action, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await action(cancellationToken);
+                return VoidSucess;
+            }
+            catch (Exception ex)
+            {
+                return new Try<Void>(ex);
+            }
+        }
+
+        public static AsyncTry<TResult> ExecuteAsync<TResult>(Func<CancellationToken, Task<TResult>> function, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return new(function(cancellationToken).ChainAwait(task => new Try<TResult>(task)));
+            }
+            catch (Exception ex)
+            {
+                return new(new Try<TResult>(ex));
+            }
+        }
+
+        public static AsyncTry<TState, Void> ExecuteAsync<TState>(Func<TState, CancellationToken, Task> action, TState State, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return new(action(State, cancellationToken).ChainAwait(task => new Try<TState, Void>(State, task)));
+            }
+            catch (Exception ex)
+            {
+                return new(new Try<TState, Void>(State, ex));
+            }
+        }
+
+        public static AsyncTry<TState, TResult> ExecuteAsync<TState, TResult>(Func<TState, CancellationToken, Task<TResult>> action, TState State, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return new(action(State, cancellationToken).ChainAwait(task => new Try<TState, TResult>(State, task)));
             }
             catch (Exception ex)
             {
